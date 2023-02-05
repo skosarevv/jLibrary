@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<body>
+
+<a href="/books">Go to all books</a>
+
+<br>
+<hr>
+
+<h3>Book</h3>
+<p th:text="${'Title: ' + book.title}">Title</p>
+<p th:text="${'Author: ' + book.author}">Author</p>
+<p th:text="${'Year: ' + book.year}">Year</p>
+
+<br>
+
+<div th:if="${book.personId != 0}">
+    <p>The book is now at:</p>
+    <a th:href="@{/people/{id}(id=${person.id})}" th:text="${person.fullName}">book owner</a>
+    <form th:method="PATCH" th:action="@{/books/{id}/free(id=${book.id})}">
+        <input type="submit" value="Set free">
+    </form>
+</div>
+<div th:if="${book.personId == 0}">
+    <p>This book is free. Who to give it to?</p>
+    <form th:method="PATCH" th:action="@{/books/{id}(id=${book.id})}" th:object="${book}">
+        <input type="hidden" th:field="*{title}" id="title">
+        <input type="hidden" th:field="*{author}" id="author">
+        <input type="hidden" th:field="*{year}" id="year">
+
+        <label for="select_person">Select person: </label>
+        <select th:field="*{personId}" id="select_person">
+            <option th:each="person : ${people}" th:value="${person.id}" th:text="${person.fullName}"></option>
+        </select>
+        <input type="submit" value="Set person">
+    </form>
+
+</div>
+
+<br>
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.id})}">
+    <input type="submit" value="Edit">
+</form>
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.id})}">
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

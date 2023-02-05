@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>People</title>
+</head>
+<body>
+
+<a href="/books">Go to books</a>
+
+<br>
+<hr>
+
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.id})}"
+       th:text="${person.fullName  + ', ' + person.birthYear}">user</a>
+</div>
+
+<br>
+<hr>
+
+<a href="/people/new">Create new person</a>
+
+</body>
+</html>
