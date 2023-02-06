@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
@@ -78,6 +79,28 @@ public class PersonDAO {
             person.setId(resultSet.getInt("id"));
             person.setFullName(resultSet.getString("full_name"));
             person.setBirthYear(resultSet.getInt("birth_year"));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return person;
+    }
+
+    public Person show(String fullName) {
+        Person person = null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM person WHERE full_name = ?");
+            preparedStatement.setString(1, fullName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+
+                person = new Person();
+
+                person.setId(resultSet.getInt("id"));
+                person.setFullName(resultSet.getString("full_name"));
+                person.setBirthYear(resultSet.getInt("birth_year"));
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
