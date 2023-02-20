@@ -2,7 +2,6 @@ package dev.skosarev.librarysystem.model;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class Person {

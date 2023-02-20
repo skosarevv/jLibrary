@@ -24,7 +24,7 @@ public class BooksController {
         this.personDAO = personDAO;
     }
 
-    @RequestMapping
+    @GetMapping
     public String index(Model model) {
         model.addAttribute("books", bookDAO.index());
         return "books/index";
@@ -47,7 +47,7 @@ public class BooksController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("book", bookDAO.show(id));
-        model.addAttribute("person", personDAO.getByBook(id));
+        model.addAttribute("person", personDAO.getPersonByBook(id));
         model.addAttribute("people", personDAO.index());
         return "books/show";
     }
